@@ -51,16 +51,13 @@ class PDFReport(FPDF):
         """ Adiciona as métricas de resultado em colunas. """
         self.set_font('Arial', 'B', 11)
         
-        # Calcula a largura de cada célula (190mm é a largura útil A4 com margens de 10mm)
         num_metrics = len(metrics_data)
         cell_width = 190 / num_metrics if num_metrics > 0 else 190
 
-        # Títulos
         for title, _ in metrics_data:
             self.cell(cell_width, 7, title, 1, 0, 'C')
         self.ln()
 
-        # Valores
         self.set_font('', '')
         for _, value in metrics_data:
             self.cell(cell_width, 10, value, 1, 0, 'C')
@@ -69,12 +66,10 @@ class PDFReport(FPDF):
 
     def add_matplotlib_chart(self, chart_figure):
         """ Salva uma figura Matplotlib em memória e a insere no PDF. """
-        # Salva o gráfico em um buffer de bytes em memória
         chart_buffer = io.BytesIO()
         chart_figure.savefig(chart_buffer, format='PNG', dpi=300)
         chart_buffer.seek(0)
         
-        # Insere a imagem. A largura 190mm garante que ela ocupe a largura útil da página.
         self.image(chart_buffer, x=self.get_x(), y=self.get_y(), w=190)
         chart_buffer.close()
         self.ln(5)
@@ -104,5 +99,5 @@ def generate_report(project_name, scenario_name, params_data, results_data, metr
     pdf.add_section_title('Gráfico: Curva da Bomba vs. Curva do Sistema')
     pdf.add_matplotlib_chart(chart_figure)
 
-    # Retorna o PDF gerado como um bytearray, pronto para o download
-    return pdf.output()
+    # CORREÇÃO FINAL: Converte explicitamente a saída para 'bytes'
+    return bytes(pdf.output())
