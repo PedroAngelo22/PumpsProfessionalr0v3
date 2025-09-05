@@ -104,5 +104,5 @@ def generate_report(project_name, scenario_name, params_data, results_data, metr
     pdf.add_section_title('Gráfico: Curva da Bomba vs. Curva do Sistema')
     pdf.add_matplotlib_chart(chart_figure)
 
-    # Retorna o PDF gerado como uma sequência de bytes
-    return pdf.output(dest='S').encode('latin-1')
+    # Retorna o PDF gerado como um bytearray, pronto para o download
+    return pdf.output()
