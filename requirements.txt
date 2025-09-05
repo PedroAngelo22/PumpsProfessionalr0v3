@@ -1,0 +1,10 @@
+bcrypt
+fpdf2
+graphviz
+matplotlib
+numpy
+pandas
+pyyaml
+scipy
+streamlit
+streamlit-authenticator
